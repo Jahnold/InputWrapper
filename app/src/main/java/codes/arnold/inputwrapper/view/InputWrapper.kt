@@ -22,10 +22,16 @@ class InputWrapper @JvmOverloads constructor (
 
     private lateinit var editText: EditText
 
+    private var isViewEnabled = true
+    private var isViewFocused = false
+    private var isError = false
+
     private val labelView = TextView(context)
     private val inputLayout = FrameLayout(context)
     private val endButtonLayout = FrameLayout(context)
     private val backgroundDrawable = InputWrapperBackgroundDrawable(context)
+
+    private val stateResolver = InputWrapperStateResolver()
 
     var label: String? = null
         set(value) {
@@ -45,6 +51,7 @@ class InputWrapper @JvmOverloads constructor (
         initEditText()
         initEndButton()
         initLabel()
+        updateState()
     }
 
     override fun addView(child: View?, index: Int, params: ViewGroup.LayoutParams) {
@@ -60,15 +67,26 @@ class InputWrapper @JvmOverloads constructor (
         }
     }
 
+
+    override fun setEnabled(enabled: Boolean) {
+        super.setEnabled(enabled)
+        isViewEnabled = enabled
+        updateState()
+    }
+
     private fun initAttrs(attrs: AttributeSet) {
         context.withStyledAttributes(attrs, R.styleable.InputWrapper) {
             label = getString(R.styleable.InputWrapper_iw_label)
+            isViewEnabled = getBoolean(R.styleable.InputWrapper_android_enabled, true)
         }
     }
 
     private fun initEditText() {
         editText.background = backgroundDrawable
-        editText.setOnFocusChangeListener { _, hasFocus -> setFocus(hasFocus) }
+        editText.setOnFocusChangeListener { _, hasFocus ->
+            isViewFocused = hasFocus
+            updateState()
+        }
     }
 
     @SuppressLint("RtlHardcoded")
@@ -87,10 +105,11 @@ class InputWrapper @JvmOverloads constructor (
         addView(labelView, 0)
     }
 
-    private fun setFocus(hasFocus: Boolean) {
-        backgroundDrawable.borderColour  = when (hasFocus) {
-            true -> R.color.apple_green
-            else -> R.color.elephant_grey
-        }
+    private fun updateState() {
+        val state = stateResolver.resolveState(isViewFocused, isViewEnabled, isError)
+        backgroundDrawable.borderColour = state.borderColour
+        backgroundDrawable.backgroundColour = state.backgroundColour
+        editText.setTextColor(state.textColour)
     }
+
 }

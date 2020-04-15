@@ -23,10 +23,11 @@
 
     </codes.arnold.inputwrapper.view.InputWrapper>
 
-    <com.google.android.material.textfield.TextInputLayout
+    <codes.arnold.inputwrapper.view.InputWrapper
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:endIconMode="clear_text"
+        android:enabled="false"
+        app:iw_label="disabled"
         >
 
         <EditText
@@ -34,6 +35,6 @@
             android:layout_height="wrap_content"
             />
 
-    </com.google.android.material.textfield.TextInputLayout>
+    </codes.arnold.inputwrapper.view.InputWrapper>
 
 </LinearLayout>
