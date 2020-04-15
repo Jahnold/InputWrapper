@@ -88,6 +88,9 @@ class InputWrapper @JvmOverloads constructor (
     }
 
     private fun setFocus(hasFocus: Boolean) {
-
+        backgroundDrawable.borderColour  = when (hasFocus) {
+            true -> R.color.apple_green
+            else -> R.color.elephant_grey
+        }
     }
 }

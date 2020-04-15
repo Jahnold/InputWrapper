@@ -11,7 +11,7 @@ class InputWrapperBackgroundDrawable(private val context: Context): Drawable() {
 
     companion object {
         private const val RADIUS = 8f
-        private const val BORDER_WIDTH = 2f
+        private const val BORDER_WIDTH = 4f
     }
 
     private val borderPaint = Paint(Paint.ANTI_ALIAS_FLAG)
