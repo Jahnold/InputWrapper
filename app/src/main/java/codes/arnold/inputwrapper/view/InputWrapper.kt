@@ -2,8 +2,11 @@ package codes.arnold.inputwrapper.view
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.TypedArray
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
@@ -17,6 +20,7 @@ import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import codes.arnold.inputwrapper.R
 import codes.arnold.inputwrapper.view.behaviours.*
+import java.lang.IllegalStateException
 
 class InputWrapper @JvmOverloads constructor (
     context: Context,
@@ -29,6 +33,9 @@ class InputWrapper @JvmOverloads constructor (
         const val END_BEHAVIOUR_CLEAR = 1
         const val END_BEHAVIOUR_PASSWORD = 2
         const val END_BEHAVIOUR_CUSTOM = 3
+
+        const val PASSWORD_TYPE_TEXT = 0
+        const val PASSWORD_TYPE_ICON = 1
     }
 
     private lateinit var editText: EditText
@@ -40,15 +47,22 @@ class InputWrapper @JvmOverloads constructor (
 
     private val labelView = TextView(context)
     private val inputLayout = FrameLayout(context)
-    private val startBehaviourLayout = FrameLayout(context)
-    private val endBehaviourLayout = FrameLayout(context)
+    private val startBehaviourLayout = TextView(context)
+    private val endBehaviourLayout = TextView(context)
     private val backgroundDrawable = InputWrapperBackgroundDrawable(context)
 
     private val stateResolver = InputWrapperStateResolver()
 
     private val editTextDelegate = object : EditTextDelegate {
+        override fun getEditText(): EditText  = editText
         override fun getText(): String = editText.text.toString()
         override fun setText(text: String) = editText.setText(text)
+        override fun passwordVisible(visible: Boolean) {
+            when (visible) {
+                true -> editText.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                else -> editText.transformationMethod = PasswordTransformationMethod.getInstance()
+            }
+        }
     }
 
     var label: String? = null
@@ -97,14 +111,29 @@ class InputWrapper @JvmOverloads constructor (
         context.withStyledAttributes(attrs, R.styleable.InputWrapper) {
             label = getString(R.styleable.InputWrapper_iw_label)
             isViewEnabled = getBoolean(R.styleable.InputWrapper_android_enabled, true)
-            val endBehaviour = getInt(R.styleable.InputWrapper_endBehaviour, END_BEHAVIOUR_NONE)
-            setEndBehaviourFromAttr(endBehaviour)
+
+            setEndBehaviourFromAttr(this)
         }
     }
 
-    private fun setEndBehaviourFromAttr(value: Int) {
-        when (value) {
-            END_BEHAVIOUR_CLEAR -> setBehaviour(ClearTextBehaviour(this))
+    private fun setEndBehaviourFromAttr(typedArray: TypedArray) {
+
+        when (typedArray.getInt(R.styleable.InputWrapper_endBehaviour, END_BEHAVIOUR_NONE)) {
+            END_BEHAVIOUR_CLEAR -> {
+                setBehaviour(ClearTextBehaviour(this))
+            }
+            END_BEHAVIOUR_PASSWORD -> {
+                val passwordToggleType = typedArray.getInt(
+                    R.styleable.InputWrapper_passwordToggleType,
+                    PASSWORD_TYPE_TEXT
+                )
+                val mode = when (passwordToggleType) {
+                    PASSWORD_TYPE_TEXT -> PasswordBehaviour.Mode.TEXT
+                    PASSWORD_TYPE_ICON -> PasswordBehaviour.Mode.ICON
+                    else -> throw IllegalStateException("invalid mode $passwordToggleType")
+                }
+                setBehaviour(PasswordBehaviour(this, mode))
+            }
         }
     }
 
@@ -166,6 +195,7 @@ class InputWrapper @JvmOverloads constructor (
         }
         layout.isInvisible = !state.isVisible
         state.drawableRes?.let { layout.setBackgroundResource(it) }
+        layout.text = state.text
 
         layout.setOnClickListener { behaviour.onClick(editTextDelegate) }
     }

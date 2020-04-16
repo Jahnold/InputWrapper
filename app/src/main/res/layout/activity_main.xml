@@ -13,7 +13,7 @@
     <codes.arnold.inputwrapper.view.InputWrapper
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:iw_label="hello"
+        app:iw_label="clear"
         app:endBehaviour="clear"
         >
 
@@ -35,6 +35,39 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            />
+
+    </codes.arnold.inputwrapper.view.InputWrapper>
+
+    <codes.arnold.inputwrapper.view.InputWrapper
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:iw_label="password text"
+        app:endBehaviour="password"
+        >
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            />
+
+    </codes.arnold.inputwrapper.view.InputWrapper>
+
+    <codes.arnold.inputwrapper.view.InputWrapper
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:iw_label="password icon"
+        app:endBehaviour="password"
+        app:passwordToggleType="icon"
+        >
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
             />
 
     </codes.arnold.inputwrapper.view.InputWrapper>
