@@ -34,6 +34,9 @@ class InputWrapper @JvmOverloads constructor (
         const val END_BEHAVIOUR_PASSWORD = 2
         const val END_BEHAVIOUR_CUSTOM = 3
 
+        const val START_BEHAVIOUR_NONE = 0
+        const val START_BEHAVIOUR_PREFIX = 1
+
         const val PASSWORD_TYPE_TEXT = 0
         const val PASSWORD_TYPE_ICON = 1
     }
@@ -112,7 +115,19 @@ class InputWrapper @JvmOverloads constructor (
             label = getString(R.styleable.InputWrapper_iw_label)
             isViewEnabled = getBoolean(R.styleable.InputWrapper_android_enabled, true)
 
+            setStartBehaviourFromAttr(this)
             setEndBehaviourFromAttr(this)
+        }
+    }
+
+    private fun setStartBehaviourFromAttr(typedArray: TypedArray) {
+
+        when (typedArray.getInt(R.styleable.InputWrapper_startBehaviour, START_BEHAVIOUR_NONE)) {
+            START_BEHAVIOUR_PREFIX -> {
+                val prefix = typedArray.getString(R.styleable.InputWrapper_prefix).orEmpty()
+                val behaviour = PrefixBehaviour(this).also { it.prefix = prefix }
+                setBehaviour(behaviour)
+            }
         }
     }
 
@@ -199,5 +214,4 @@ class InputWrapper @JvmOverloads constructor (
 
         layout.setOnClickListener { behaviour.onClick(editTextDelegate) }
     }
-
 }

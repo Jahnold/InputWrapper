@@ -22,4 +22,8 @@ class ClearTextBehaviour(wrapper: InputWrapperDelegate): InputWrapperBehaviour(w
         isVisible = text.isNotEmpty()
         wrapper.setBehaviour(this)
     }
+
+    override fun onError(isError: Boolean) {
+        TODO("not implemented")
+    }
 }

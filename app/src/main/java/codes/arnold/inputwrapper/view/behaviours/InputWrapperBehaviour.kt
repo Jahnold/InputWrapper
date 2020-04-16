@@ -6,5 +6,6 @@ abstract class InputWrapperBehaviour(
     abstract fun getState(): BehaviourState
     abstract fun onClick(delegate: EditTextDelegate)
     abstract fun onChange(text: String)
+    abstract fun onError(isError: Boolean)
 }
 

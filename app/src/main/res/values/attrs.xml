@@ -3,6 +3,10 @@
     <declare-styleable name="InputWrapper">
         <attr name="iw_label" format="string" />
         <attr name="android:enabled"  />
+        <attr name="startBehaviour" format="enum">
+            <enum name="none" value="0"/>
+            <enum name="prefix" value="1"/>
+        </attr>
         <attr name="endBehaviour" format="enum">
             <enum name="none" value="0"/>
             <enum name="clear" value="1"/>
@@ -13,5 +17,6 @@
             <enum name="text" value="0"/>
             <enum name="icon" value="1"/>
         </attr>
+        <attr name="prefix" format="string" />
     </declare-styleable>
 </resources>

@@ -38,6 +38,10 @@ class PasswordBehaviour(
 
     override fun onChange(text: String) { /* no-op */ }
 
+    override fun onError(isError: Boolean) {
+        TODO("not implemented")
+    }
+
     enum class Mode {
         TEXT, ICON
     }

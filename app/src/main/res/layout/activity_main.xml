@@ -6,22 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity"
     android:padding="16dp"
+    tools:context=".MainActivity"
     >
 
     <codes.arnold.inputwrapper.view.InputWrapper
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:iw_label="clear"
         app:endBehaviour="clear"
-        >
-
+        app:iw_label="clear">
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-
+            android:layout_height="wrap_content" />
     </codes.arnold.inputwrapper.view.InputWrapper>
 
     <codes.arnold.inputwrapper.view.InputWrapper
@@ -29,47 +25,46 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:enabled="false"
-        app:iw_label="disabled"
-        >
-
+        app:iw_label="disabled">
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-
+            android:layout_height="wrap_content" />
     </codes.arnold.inputwrapper.view.InputWrapper>
 
     <codes.arnold.inputwrapper.view.InputWrapper
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:iw_label="password text"
         app:endBehaviour="password"
-        >
-
+        app:iw_label="password text">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            />
-
+            android:inputType="textPassword" />
     </codes.arnold.inputwrapper.view.InputWrapper>
 
     <codes.arnold.inputwrapper.view.InputWrapper
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        app:endBehaviour="password"
         app:iw_label="password icon"
-        app:endBehaviour="password"
-        app:passwordToggleType="icon"
-        >
-
+        app:passwordToggleType="icon">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            />
-
+            android:inputType="textPassword" />
     </codes.arnold.inputwrapper.view.InputWrapper>
 
+    <codes.arnold.inputwrapper.view.InputWrapper
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:startBehaviour="prefix"
+        app:prefix="@string/prefix"
+        app:iw_label="prefix">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </codes.arnold.inputwrapper.view.InputWrapper>
 </LinearLayout>
