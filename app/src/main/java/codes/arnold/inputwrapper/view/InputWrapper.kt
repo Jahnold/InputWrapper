@@ -13,12 +13,14 @@ import android.widget.TextView
 import androidx.core.content.withStyledAttributes
 import androidx.core.view.isGone
 import codes.arnold.inputwrapper.R
+import codes.arnold.inputwrapper.view.behaviours.InputWrapperBehaviour
+import codes.arnold.inputwrapper.view.behaviours.InputWrapperDelegate
 
 class InputWrapper @JvmOverloads constructor (
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-): LinearLayout(context, attrs, defStyleAttr) {
+): LinearLayout(context, attrs, defStyleAttr), InputWrapperDelegate {
 
     private lateinit var editText: EditText
 
@@ -28,7 +30,8 @@ class InputWrapper @JvmOverloads constructor (
 
     private val labelView = TextView(context)
     private val inputLayout = FrameLayout(context)
-    private val endButtonLayout = FrameLayout(context)
+    private val startBehaviourLayout = FrameLayout(context)
+    private val endBehaviourLayout = FrameLayout(context)
     private val backgroundDrawable = InputWrapperBackgroundDrawable(context)
 
     private val stateResolver = InputWrapperStateResolver()
@@ -49,7 +52,7 @@ class InputWrapper @JvmOverloads constructor (
     override fun onFinishInflate() {
         super.onFinishInflate()
         initEditText()
-        initEndButton()
+        initEndBehaviour()
         initLabel()
         updateState()
     }
@@ -62,6 +65,7 @@ class InputWrapper @JvmOverloads constructor (
             inputLayout.addView(child, flp)
             inputLayout.layoutParams = params
             editText = child
+            editText.isEnabled = isViewEnabled
         } else {
             super.addView(child, index, params)
         }
@@ -90,13 +94,23 @@ class InputWrapper @JvmOverloads constructor (
     }
 
     @SuppressLint("RtlHardcoded")
-    private fun initEndButton() {
-        endButtonLayout.layoutParams = FrameLayout.LayoutParams(
+    private fun initEndBehaviour() {
+        endBehaviourLayout.layoutParams = FrameLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT,
             Gravity.END or Gravity.RIGHT or Gravity.CENTER_VERTICAL
         )
-        inputLayout.addView(endButtonLayout)
+        inputLayout.addView(endBehaviourLayout)
+    }
+
+    @SuppressLint("RtlHardcoded")
+    private fun initStartBehaviour() {
+        startBehaviourLayout.layoutParams = FrameLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            Gravity.START or Gravity.LEFT or Gravity.CENTER_VERTICAL
+        )
+        inputLayout.addView(startBehaviourLayout)
     }
 
     private fun initLabel() {
@@ -110,6 +124,10 @@ class InputWrapper @JvmOverloads constructor (
         backgroundDrawable.borderColour = state.borderColour
         backgroundDrawable.backgroundColour = state.backgroundColour
         editText.setTextColor(state.textColour)
+    }
+
+    override fun update(behaviour: InputWrapperBehaviour) {
+        TODO("not implemented")
     }
 
 }

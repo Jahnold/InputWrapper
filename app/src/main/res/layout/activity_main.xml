@@ -26,6 +26,7 @@
     <codes.arnold.inputwrapper.view.InputWrapper
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:enabled="false"
         app:iw_label="disabled"
         >
