@@ -9,7 +9,7 @@ class ClearTextBehaviour(wrapper: InputWrapperDelegate): InputWrapperBehaviour(w
     override fun getState(): BehaviourState {
         return BehaviourState(
             alignment = BehaviourAlignment.END,
-            drawableRes = R.drawable.ic_launcher_background,
+            drawableRes = R.drawable.ic_clear,
             isVisible = isVisible
         )
     }
@@ -20,6 +20,6 @@ class ClearTextBehaviour(wrapper: InputWrapperDelegate): InputWrapperBehaviour(w
 
     override fun onChange(text: String) {
         isVisible = text.isNotEmpty()
-        wrapper.update(this)
+        wrapper.setBehaviour(this)
     }
 }

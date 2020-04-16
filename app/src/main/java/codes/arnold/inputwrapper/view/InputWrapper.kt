@@ -2,6 +2,8 @@ package codes.arnold.inputwrapper.view
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
@@ -12,9 +14,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.withStyledAttributes
 import androidx.core.view.isGone
+import androidx.core.view.isInvisible
 import codes.arnold.inputwrapper.R
-import codes.arnold.inputwrapper.view.behaviours.InputWrapperBehaviour
-import codes.arnold.inputwrapper.view.behaviours.InputWrapperDelegate
+import codes.arnold.inputwrapper.view.behaviours.*
 
 class InputWrapper @JvmOverloads constructor (
     context: Context,
@@ -22,11 +24,19 @@ class InputWrapper @JvmOverloads constructor (
     defStyleAttr: Int = 0
 ): LinearLayout(context, attrs, defStyleAttr), InputWrapperDelegate {
 
+    private companion object {
+        const val END_BEHAVIOUR_NONE = 0
+        const val END_BEHAVIOUR_CLEAR = 1
+        const val END_BEHAVIOUR_PASSWORD = 2
+        const val END_BEHAVIOUR_CUSTOM = 3
+    }
+
     private lateinit var editText: EditText
 
     private var isViewEnabled = true
     private var isViewFocused = false
     private var isError = false
+    private val behaviours = mutableMapOf<BehaviourAlignment, InputWrapperBehaviour>()
 
     private val labelView = TextView(context)
     private val inputLayout = FrameLayout(context)
@@ -35,6 +45,11 @@ class InputWrapper @JvmOverloads constructor (
     private val backgroundDrawable = InputWrapperBackgroundDrawable(context)
 
     private val stateResolver = InputWrapperStateResolver()
+
+    private val editTextDelegate = object : EditTextDelegate {
+        override fun getText(): String = editText.text.toString()
+        override fun setText(text: String) = editText.setText(text)
+    }
 
     var label: String? = null
         set(value) {
@@ -52,6 +67,7 @@ class InputWrapper @JvmOverloads constructor (
     override fun onFinishInflate() {
         super.onFinishInflate()
         initEditText()
+        initStartBehaviour()
         initEndBehaviour()
         initLabel()
         updateState()
@@ -71,7 +87,6 @@ class InputWrapper @JvmOverloads constructor (
         }
     }
 
-
     override fun setEnabled(enabled: Boolean) {
         super.setEnabled(enabled)
         isViewEnabled = enabled
@@ -82,6 +97,14 @@ class InputWrapper @JvmOverloads constructor (
         context.withStyledAttributes(attrs, R.styleable.InputWrapper) {
             label = getString(R.styleable.InputWrapper_iw_label)
             isViewEnabled = getBoolean(R.styleable.InputWrapper_android_enabled, true)
+            val endBehaviour = getInt(R.styleable.InputWrapper_endBehaviour, END_BEHAVIOUR_NONE)
+            setEndBehaviourFromAttr(endBehaviour)
+        }
+    }
+
+    private fun setEndBehaviourFromAttr(value: Int) {
+        when (value) {
+            END_BEHAVIOUR_CLEAR -> setBehaviour(ClearTextBehaviour(this))
         }
     }
 
@@ -91,6 +114,13 @@ class InputWrapper @JvmOverloads constructor (
             isViewFocused = hasFocus
             updateState()
         }
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                behaviours.values.forEach { it.onChange(s.toString()) }
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { /* no-op */ }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { /* no-op */ }
+        })
     }
 
     @SuppressLint("RtlHardcoded")
@@ -126,8 +156,18 @@ class InputWrapper @JvmOverloads constructor (
         editText.setTextColor(state.textColour)
     }
 
-    override fun update(behaviour: InputWrapperBehaviour) {
-        TODO("not implemented")
+    override fun setBehaviour(behaviour: InputWrapperBehaviour) {
+
+        val state = behaviour.getState()
+        behaviours[state.alignment] = behaviour
+        val layout = when(state.alignment) {
+            BehaviourAlignment.START -> startBehaviourLayout
+            BehaviourAlignment.END -> endBehaviourLayout
+        }
+        layout.isInvisible = !state.isVisible
+        state.drawableRes?.let { layout.setBackgroundResource(it) }
+
+        layout.setOnClickListener { behaviour.onClick(editTextDelegate) }
     }
 
 }
