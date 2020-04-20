@@ -18,8 +18,4 @@ class PrefixBehaviour(wrapper: InputWrapperDelegate): InputWrapperBehaviour(wrap
 
     override fun onClick(delegate: EditTextDelegate) { /* no-op */  }
     override fun onChange(text: String) { /* no-op */ }
-
-    override fun onError(isError: Boolean) {
-        TODO("not implemented")
-    }
 }

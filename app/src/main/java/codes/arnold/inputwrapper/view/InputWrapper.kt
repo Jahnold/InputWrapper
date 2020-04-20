@@ -15,6 +15,7 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
@@ -47,6 +48,7 @@ class InputWrapper @JvmOverloads constructor (
     private var isViewFocused = false
     private var isError = false
     private val behaviours = mutableMapOf<BehaviourAlignment, InputWrapperBehaviour>()
+    private var validator: (String) -> Boolean = { true }
 
     private val labelView = TextView(context)
     private val inputLayout = FrameLayout(context)
@@ -61,9 +63,9 @@ class InputWrapper @JvmOverloads constructor (
         override fun getText(): String = editText.text.toString()
         override fun setText(text: String) = editText.setText(text)
         override fun passwordVisible(visible: Boolean) {
-            when (visible) {
-                true -> editText.transformationMethod = HideReturnsTransformationMethod.getInstance()
-                else -> editText.transformationMethod = PasswordTransformationMethod.getInstance()
+            editText.transformationMethod = when (visible) {
+                true -> HideReturnsTransformationMethod.getInstance()
+                else -> PasswordTransformationMethod.getInstance()
             }
         }
     }
@@ -108,6 +110,11 @@ class InputWrapper @JvmOverloads constructor (
         super.setEnabled(enabled)
         isViewEnabled = enabled
         updateState()
+    }
+
+    fun setError(isError: Boolean) {
+        this.isError = isError
+        behaviours.values.forEach { it.onError(isError) }
     }
 
     private fun initAttrs(attrs: AttributeSet) {
@@ -161,6 +168,7 @@ class InputWrapper @JvmOverloads constructor (
         editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 behaviours.values.forEach { it.onChange(s.toString()) }
+                setError(validator.invoke(s.toString()))
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { /* no-op */ }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { /* no-op */ }
@@ -210,8 +218,17 @@ class InputWrapper @JvmOverloads constructor (
         }
         layout.isInvisible = !state.isVisible
         state.drawableRes?.let { layout.setBackgroundResource(it) }
+        state.drawableTint?.let { layout.background?.setTint(it)}
+
         layout.text = state.text
+        state.textColour
+            ?.let { ContextCompat.getColor(context, it) }
+            ?.let { layout.setTextColor(it) }
 
         layout.setOnClickListener { behaviour.onClick(editTextDelegate) }
+    }
+
+    fun setValidator(validator: (String) -> Boolean) {
+        this.validator = validator
     }
 }

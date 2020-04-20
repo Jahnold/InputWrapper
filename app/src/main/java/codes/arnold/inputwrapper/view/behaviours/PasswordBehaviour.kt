@@ -13,13 +13,23 @@ class PasswordBehaviour(
         return BehaviourState(
             alignment = BehaviourAlignment.END,
             text = getText(),
-            drawableRes = getDrawable()
+            textColour = getTextColour(),
+            drawableRes = getDrawable(),
+            drawableTint = getDrawableTint()
         )
     }
 
     private fun getText(): String? {
         if (mode == Mode.ICON) return null
         return if (isPasswordVisible) "hide" else "show"
+    }
+
+    private fun getTextColour(): Int? {
+        return when {
+            mode == Mode.ICON -> null
+            isError -> R.color.red
+            else -> null
+        }
     }
 
     private fun getDrawable(): Int? {
@@ -30,6 +40,14 @@ class PasswordBehaviour(
         }
     }
 
+    private fun getDrawableTint(): Int? {
+        return when {
+            mode == Mode.TEXT -> null
+            isError -> R.color.red
+            else -> null
+        }
+    }
+
     override fun onClick(delegate: EditTextDelegate) {
         isPasswordVisible = !isPasswordVisible
         delegate.passwordVisible(isPasswordVisible)
@@ -37,10 +55,6 @@ class PasswordBehaviour(
     }
 
     override fun onChange(text: String) { /* no-op */ }
-
-    override fun onError(isError: Boolean) {
-        TODO("not implemented")
-    }
 
     enum class Mode {
         TEXT, ICON

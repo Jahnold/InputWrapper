@@ -17,7 +17,9 @@
         app:iw_label="clear">
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="@string/hint"
+            />
     </codes.arnold.inputwrapper.view.InputWrapper>
 
     <codes.arnold.inputwrapper.view.InputWrapper
@@ -63,6 +65,21 @@
         app:startBehaviour="prefix"
         app:prefix="@string/prefix"
         app:iw_label="prefix">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </codes.arnold.inputwrapper.view.InputWrapper>
+
+    <codes.arnold.inputwrapper.view.InputWrapper
+        android:id="@+id/error_length"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:startBehaviour="prefix"
+        app:prefix="@string/prefix"
+        app:iw_label="Error Length Less Than 5"
+        app:endBehaviour="clear"
+        >
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
