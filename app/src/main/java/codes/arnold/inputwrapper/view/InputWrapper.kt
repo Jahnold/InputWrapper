@@ -3,6 +3,9 @@ package codes.arnold.inputwrapper.view
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.TypedArray
+import android.graphics.ColorFilter
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
@@ -218,17 +221,23 @@ class InputWrapper @JvmOverloads constructor (
         }
         layout.isInvisible = !state.isVisible
         state.drawableRes?.let { layout.setBackgroundResource(it) }
-        state.drawableTint?.let { layout.background?.setTint(it)}
+
+        layout.background?.colorFilter = when (state.drawableTint) {
+            null -> null
+            else -> PorterDuffColorFilter(state.drawableTint.toColor(), PorterDuff.Mode.SRC_ATOP)
+        }
 
         layout.text = state.text
-        state.textColour
-            ?.let { ContextCompat.getColor(context, it) }
-            ?.let { layout.setTextColor(it) }
+        layout.setTextColor(state.textColour.toColor())
 
         layout.setOnClickListener { behaviour.onClick(editTextDelegate) }
     }
 
     fun setValidator(validator: (String) -> Boolean) {
         this.validator = validator
+    }
+
+    private fun Int.toColor(): Int {
+        return ContextCompat.getColor(context, this)
     }
 }

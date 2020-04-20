@@ -1,5 +1,7 @@
 package codes.arnold.inputwrapper.view.behaviours
 
+import codes.arnold.inputwrapper.R
+
 class PrefixBehaviour(wrapper: InputWrapperDelegate): InputWrapperBehaviour(wrapper) {
 
     var prefix: String = ""
@@ -12,6 +14,7 @@ class PrefixBehaviour(wrapper: InputWrapperDelegate): InputWrapperBehaviour(wrap
         return BehaviourState(
             alignment = BehaviourAlignment.START,
             text = prefix,
+            textColour = if (isError) R.color.red else R.color.default_text,
             isVisible = true
         )
     }

@@ -24,11 +24,11 @@ class PasswordBehaviour(
         return if (isPasswordVisible) "hide" else "show"
     }
 
-    private fun getTextColour(): Int? {
+    private fun getTextColour(): Int {
         return when {
-            mode == Mode.ICON -> null
+            mode == Mode.ICON -> R.color.default_text
             isError -> R.color.red
-            else -> null
+            else -> R.color.default_text
         }
     }
 

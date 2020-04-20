@@ -11,6 +11,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val errorLength = findViewById<InputWrapper>(R.id.error_length)
-        errorLength.setValidator { text -> text.length > 5 }
+        errorLength.setValidator { text -> text.length < 5 }
     }
 }

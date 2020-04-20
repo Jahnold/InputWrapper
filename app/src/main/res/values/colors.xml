@@ -11,4 +11,5 @@
     <color name="red">#dc2a4c</color>
     <color name="pale_red">#fde8ed</color>
     <color name="white">#fff</color>
+    <color name="default_text">#1e1e1e</color>
 </resources>
