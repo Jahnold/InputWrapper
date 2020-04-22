@@ -3,7 +3,6 @@ package codes.arnold.inputwrapper.view
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.TypedArray
-import android.graphics.ColorFilter
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.text.Editable
@@ -20,6 +19,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
+import androidx.core.view.doOnLayout
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import codes.arnold.inputwrapper.R
@@ -55,6 +55,7 @@ class InputWrapper @JvmOverloads constructor (
 
     private val labelView = TextView(context)
     private val inputLayout = FrameLayout(context)
+    private val innerInputLayout = FrameLayout(context)
     private val startBehaviourLayout = TextView(context)
     private val endBehaviourLayout = TextView(context)
     private val backgroundDrawable = InputWrapperBackgroundDrawable(context)
@@ -82,6 +83,8 @@ class InputWrapper @JvmOverloads constructor (
 
     init {
         orientation = VERTICAL
+        inputLayout.background = backgroundDrawable
+        inputLayout.addView(innerInputLayout)
         addView(inputLayout)
         attrs?.let { initAttrs(it) }
     }
@@ -100,7 +103,7 @@ class InputWrapper @JvmOverloads constructor (
 
             val flp = FrameLayout.LayoutParams(params)
             flp.gravity = Gravity.CENTER_VERTICAL or (flp.gravity and Gravity.VERTICAL_GRAVITY_MASK.inv())
-            inputLayout.addView(child, flp)
+            innerInputLayout.addView(child, flp)
             inputLayout.layoutParams = params
             editText = child
             editText.isEnabled = isViewEnabled
@@ -163,7 +166,7 @@ class InputWrapper @JvmOverloads constructor (
     }
 
     private fun initEditText() {
-        editText.background = backgroundDrawable
+        editText.background = null
         editText.setOnFocusChangeListener { _, hasFocus ->
             isViewFocused = hasFocus
             updateState()
@@ -231,6 +234,26 @@ class InputWrapper @JvmOverloads constructor (
         layout.setTextColor(state.textColour.toColor())
 
         layout.setOnClickListener { behaviour.onClick(editTextDelegate) }
+        layout.doOnLayout {
+            adjustPaddingForBehaviour(behaviour)
+        }
+    }
+
+    private fun adjustPaddingForBehaviour(behaviour: InputWrapperBehaviour) {
+
+        val top = innerInputLayout.paddingTop
+        val bottom = innerInputLayout.paddingBottom
+
+        val left = when (behaviour.getState().alignment) {
+            BehaviourAlignment.START -> startBehaviourLayout.width
+            BehaviourAlignment.END -> innerInputLayout.paddingLeft
+        }
+
+        val right = when (behaviour.getState().alignment) {
+            BehaviourAlignment.END -> endBehaviourLayout.width
+            BehaviourAlignment.START -> innerInputLayout.paddingLeft
+        }
+        innerInputLayout.setPadding(left, top, right, bottom)
     }
 
     fun setValidator(validator: (String) -> Boolean) {
