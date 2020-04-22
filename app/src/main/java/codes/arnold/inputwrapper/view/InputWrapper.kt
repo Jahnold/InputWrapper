@@ -171,7 +171,7 @@ class InputWrapper @JvmOverloads constructor (
         editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 behaviours.values.forEach { it.onChange(s.toString()) }
-                setError(validator.invoke(s.toString()))
+                setError(!validator.invoke(s.toString()))
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { /* no-op */ }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { /* no-op */ }
@@ -222,7 +222,7 @@ class InputWrapper @JvmOverloads constructor (
         layout.isInvisible = !state.isVisible
         state.drawableRes?.let { layout.setBackgroundResource(it) }
 
-        layout.background?.colorFilter = when (state.drawableTint) {
+        layout.background?.mutate()?.colorFilter = when (state.drawableTint) {
             null -> null
             else -> PorterDuffColorFilter(state.drawableTint.toColor(), PorterDuff.Mode.SRC_ATOP)
         }
