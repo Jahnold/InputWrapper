@@ -188,6 +188,7 @@ class InputWrapper @JvmOverloads constructor (
             ViewGroup.LayoutParams.WRAP_CONTENT,
             Gravity.END or Gravity.RIGHT or Gravity.CENTER_VERTICAL
         )
+        endBehaviourLayout.setPadding(0,0,8.toPx(), 0)
         inputLayout.addView(endBehaviourLayout)
     }
 
@@ -198,6 +199,7 @@ class InputWrapper @JvmOverloads constructor (
             ViewGroup.LayoutParams.WRAP_CONTENT,
             Gravity.START or Gravity.LEFT or Gravity.CENTER_VERTICAL
         )
+        startBehaviourLayout.setPadding(8.toPx(),0,0, 0)
         inputLayout.addView(startBehaviourLayout)
     }
 
@@ -263,4 +265,7 @@ class InputWrapper @JvmOverloads constructor (
     private fun Int.toColor(): Int {
         return ContextCompat.getColor(context, this)
     }
+
+    private fun Int.toPx(): Int = (this * resources.displayMetrics.density).toInt()
+
 }
