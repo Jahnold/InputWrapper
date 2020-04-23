@@ -151,5 +151,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </codes.arnold.inputwrapper.view.InputWrapper>
+
+        <codes.arnold.inputwrapper.view.InputWrapper
+            android:id="@+id/custom_behaviour"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:iw_label="12. custom behaviour - change case"
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </codes.arnold.inputwrapper.view.InputWrapper>
     </LinearLayout>
 </ScrollView>
