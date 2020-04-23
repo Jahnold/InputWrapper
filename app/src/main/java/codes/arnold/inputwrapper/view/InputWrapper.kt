@@ -19,9 +19,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
-import androidx.core.view.doOnLayout
-import androidx.core.view.isGone
-import androidx.core.view.isInvisible
+import androidx.core.view.*
 import codes.arnold.inputwrapper.R
 import codes.arnold.inputwrapper.view.behaviours.*
 import java.lang.IllegalStateException
@@ -187,8 +185,8 @@ class InputWrapper @JvmOverloads constructor (
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT,
             Gravity.END or Gravity.RIGHT or Gravity.CENTER_VERTICAL
-        )
-        endBehaviourLayout.setPadding(0,0,8.toPx(), 0)
+        ).also { it.marginEnd = 8.toPx() }
+//        endBehaviourLayout.setPadding(0,0,8.toPx(), 0)
         inputLayout.addView(endBehaviourLayout)
     }
 
@@ -198,8 +196,8 @@ class InputWrapper @JvmOverloads constructor (
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT,
             Gravity.START or Gravity.LEFT or Gravity.CENTER_VERTICAL
-        )
-        startBehaviourLayout.setPadding(8.toPx(),0,0, 0)
+        ).also { it.marginStart = 8.toPx() }
+//        startBehaviourLayout.setPadding(8.toPx(),0,0, 0)
         inputLayout.addView(startBehaviourLayout)
     }
 
@@ -251,12 +249,12 @@ class InputWrapper @JvmOverloads constructor (
         val left = when (behaviour.getState().alignment) {
             BehaviourAlignment.START -> startBehaviourLayout.width
             BehaviourAlignment.END -> innerInputLayout.paddingLeft
-        }
+        } + 8.toPx()
 
         val right = when (behaviour.getState().alignment) {
             BehaviourAlignment.END -> endBehaviourLayout.width
             BehaviourAlignment.START -> innerInputLayout.paddingLeft
-        }
+        } + 8.toPx()
         innerInputLayout.setPadding(left, top, right, bottom)
     }
 

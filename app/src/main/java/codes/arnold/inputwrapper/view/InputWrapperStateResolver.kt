@@ -30,7 +30,11 @@ class InputWrapperStateResolver {
         )
     }
 
-    fun resolveState(isFocused: Boolean, isEnabled: Boolean, isError: Boolean): InputWrapperState {
+    fun resolveState(isFocused: Boolean, isEnabled: Boolean, isError: Boolean, custom: CustomStateResolver? = null): InputWrapperState {
+
+        if (custom != null) {
+            return custom.resolveState(isFocused, isEnabled, isError)
+        }
 
         return when {
             !isEnabled -> DISABLED
