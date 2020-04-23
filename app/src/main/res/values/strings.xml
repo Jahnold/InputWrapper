@@ -3,5 +3,7 @@
     <string name="password_show">Show</string>
     <string name="password_hide">Hide</string>
     <string name="prefix">Amount:</string>
+    <string name="prefix_password">Password:</string>
     <string name="hint">Hint</string>
+    <string name="some_text">Some text</string>
 </resources>
