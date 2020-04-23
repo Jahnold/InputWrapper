@@ -227,9 +227,11 @@ class InputWrapper @JvmOverloads constructor (
         layout.isInvisible = !state.isVisible
         state.drawableRes?.let { layout.setBackgroundResource(it) }
 
-        layout.background?.mutate()?.colorFilter = when (state.drawableTint) {
-            null -> null
-            else -> PorterDuffColorFilter(state.drawableTint.toColor(), PorterDuff.Mode.SRC_ATOP)
+        layout.background?.apply {
+            colorFilter = when (state.drawableTint) {
+                null -> null
+                else -> PorterDuffColorFilter(state.drawableTint.toColor(), PorterDuff.Mode.SRC_ATOP)
+            }
         }
 
         layout.text = state.text
