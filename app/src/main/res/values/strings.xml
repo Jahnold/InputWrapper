@@ -5,5 +5,7 @@
     <string name="prefix">Amount:</string>
     <string name="prefix_password">Password:</string>
     <string name="hint">Hint</string>
+    <string name="label">Label</string>
+    <string name="custom_style">Custom Style</string>
     <string name="some_text">Some text</string>
 </resources>

@@ -17,7 +17,21 @@
         <codes.arnold.inputwrapper.view.InputWrapper
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:label="@string/some_text"
+            android:label="@string/label"
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint"
+                />
+        </codes.arnold.inputwrapper.view.InputWrapper>
+
+        <codes.arnold.inputwrapper.view.InputWrapper
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:label="@string/custom_style"
+            app:labelTextStyle="@style/customLabelTextStyle"
             >
             <EditText
                 android:layout_width="match_parent"

@@ -23,8 +23,8 @@ class InputWrapper @JvmOverloads constructor (
 
     private lateinit var editText: EditText
 
-
     private val labelView = TextView(context)
+    private val errorView = TextView(context)
     private val inputLayout = FrameLayout(context)
     private val backgroundDrawable = InputWrapperBackgroundDrawable(context)
 
@@ -36,6 +36,23 @@ class InputWrapper @JvmOverloads constructor (
         }
 
     var labelTextStyle: Int = R.style.labelTextStyle
+        set(value) {
+            field = value
+            labelView.setTextAppearance(context, labelTextStyle)
+        }
+
+    var errorText: String? = null
+        set(value) {
+            field = value
+            errorView.isGone = errorText == null
+            errorView.text = errorText
+        }
+
+    var errorTextStyle: Int = R.style.labelTextStyle
+        set(value) {
+            field = value
+            errorView.setTextAppearance(context, errorTextStyle)
+        }
 
     init {
         orientation = VERTICAL
@@ -47,6 +64,7 @@ class InputWrapper @JvmOverloads constructor (
         super.onFinishInflate()
         initEditText()
         initLabel()
+        initErrorText()
     }
 
     override fun addView(child: View?, index: Int, params: ViewGroup.LayoutParams) {
@@ -78,6 +96,13 @@ class InputWrapper @JvmOverloads constructor (
         labelView.text = label
         labelView.setTextAppearance(context, labelTextStyle)
         addView(labelView, 0)
+    }
+
+    private fun initErrorText() {
+        errorView.isGone = errorText == null
+        errorView.text = errorText
+        errorView.setTextAppearance(context, errorTextStyle)
+        addView(errorView)
     }
 
     private fun Int.toColor(): Int {

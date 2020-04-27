@@ -2,6 +2,8 @@
 <resources>
     <declare-styleable name="InputWrapper">
         <attr name="android:label" />
+        <attr name="errorText" format="string" />
         <attr name="labelTextStyle" format="reference" />
+        <attr name="errorTextStyle" format="reference" />
     </declare-styleable>
 </resources>
