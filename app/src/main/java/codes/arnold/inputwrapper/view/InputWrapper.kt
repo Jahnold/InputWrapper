@@ -84,6 +84,7 @@ class InputWrapper @JvmOverloads constructor (
         context.withStyledAttributes(attrs, R.styleable.InputWrapper) {
             label = getString(R.styleable.InputWrapper_android_label)
             labelTextStyle = getResourceId(R.styleable.InputWrapper_labelTextStyle, R.style.labelTextStyle)
+            errorTextStyle = getResourceId(R.styleable.InputWrapper_errorTextStyle, R.style.errorTextStyle)
         }
     }
 
