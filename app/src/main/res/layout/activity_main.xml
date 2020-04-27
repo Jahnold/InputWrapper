@@ -17,9 +17,8 @@
         <codes.arnold.inputwrapper.view.InputWrapper
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:startBehaviour="prefix"
-            app:prefix="@string/prefix"
-            app:iw_label="1. prefix + hint">
+            android:label="@string/some_text"
+            >
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -27,141 +26,6 @@
                 />
         </codes.arnold.inputwrapper.view.InputWrapper>
 
-        <codes.arnold.inputwrapper.view.InputWrapper
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:endBehaviour="clear"
-            app:iw_label="2. clear icon">
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
-        </codes.arnold.inputwrapper.view.InputWrapper>
-
-        <codes.arnold.inputwrapper.view.InputWrapper
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:endBehaviour="password"
-            app:iw_label="3. password text">
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword" />
-        </codes.arnold.inputwrapper.view.InputWrapper>
-
-        <codes.arnold.inputwrapper.view.InputWrapper
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:endBehaviour="password"
-            app:iw_label="4. password icon"
-            app:passwordToggleType="icon">
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword" />
-        </codes.arnold.inputwrapper.view.InputWrapper>
-
-        <codes.arnold.inputwrapper.view.InputWrapper
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:startBehaviour="prefix"
-            app:prefix="@string/prefix"
-            app:endBehaviour="clear"
-            app:iw_label="5. prefix + clear text"
-            >
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </codes.arnold.inputwrapper.view.InputWrapper>
-
-        <codes.arnold.inputwrapper.view.InputWrapper
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:startBehaviour="prefix"
-            app:prefix="@string/prefix"
-            app:endBehaviour="clear"
-            app:iw_label="6. prefix + clear icon"
-            >
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </codes.arnold.inputwrapper.view.InputWrapper>
-
-        <codes.arnold.inputwrapper.view.InputWrapper
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:enabled="false"
-            app:endBehaviour="clear"
-            app:iw_label="7. disabled + text + clear icon"
-            >
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/some_text"
-                />
-        </codes.arnold.inputwrapper.view.InputWrapper>
-
-        <codes.arnold.inputwrapper.view.InputWrapper
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:startBehaviour="prefix"
-            app:prefix="@string/prefix_password"
-            app:endBehaviour="password"
-            app:passwordToggleType="text"
-            app:iw_label="8. prefix + password text">
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                />
-        </codes.arnold.inputwrapper.view.InputWrapper>
-
-        <codes.arnold.inputwrapper.view.InputWrapper
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:enabled="false"
-            app:startBehaviour="prefix"
-            app:prefix="@string/prefix_password"
-            app:iw_label="9. disabled + prefix + password text">
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                />
-        </codes.arnold.inputwrapper.view.InputWrapper>
-
-        <codes.arnold.inputwrapper.view.InputWrapper
-            android:id="@+id/error_length"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:startBehaviour="prefix"
-            app:prefix="@string/prefix"
-            app:iw_label="10. prefix + clear icon + error"
-            app:endBehaviour="clear"
-            >
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </codes.arnold.inputwrapper.view.InputWrapper>
-
-        <codes.arnold.inputwrapper.view.InputWrapper
-            android:id="@+id/custom_behaviour"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:iw_label="12. custom behaviour - change case"
-            >
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </codes.arnold.inputwrapper.view.InputWrapper>
     </LinearLayout>
+
 </ScrollView>

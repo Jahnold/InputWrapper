@@ -6,15 +6,12 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="labelTextStyle">@style/labelTextStyle</item>
     </style>
 
-    <style name="InputWrapper">
-        <item name="borderColour">@color/elephant_grey</item>
-        <item name="backgroundColor">@color/white</item>
-    </style>
-
-    <style name="InputWrapper.Error">
-
+    <style name="labelTextStyle">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>

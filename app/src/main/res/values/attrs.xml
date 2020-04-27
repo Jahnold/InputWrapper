@@ -1,25 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="InputWrapper">
-        <attr name="iw_label" format="string" />
-        <attr name="android:enabled"  />
-        <attr name="startBehaviour" format="enum">
-            <enum name="none" value="0"/>
-            <enum name="prefix" value="1"/>
-        </attr>
-        <attr name="endBehaviour" format="enum">
-            <enum name="none" value="0"/>
-            <enum name="clear" value="1"/>
-            <enum name="password" value="2"/>
-            <enum name="custom" value="3"/>
-        </attr>
-        <attr name="passwordToggleType" format="enum">
-            <enum name="text" value="0"/>
-            <enum name="icon" value="1"/>
-        </attr>
-        <attr name="prefix" format="string" />
-
-        <attr name="borderColour" format="reference" />
-        <attr name="backgroundColour" format="reference" />
+        <attr name="android:label" />
+        <attr name="labelTextStyle" format="reference" />
     </declare-styleable>
 </resources>
