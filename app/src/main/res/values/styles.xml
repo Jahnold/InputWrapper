@@ -8,4 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="InputWrapper">
+        <item name="borderColour">@color/elephant_grey</item>
+        <item name="backgroundColor">@color/white</item>
+    </style>
+
+    <style name="InputWrapper.Error">
+
+    </style>
+
 </resources>

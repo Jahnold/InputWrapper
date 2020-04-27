@@ -18,5 +18,8 @@
             <enum name="icon" value="1"/>
         </attr>
         <attr name="prefix" format="string" />
+
+        <attr name="borderColour" format="reference" />
+        <attr name="backgroundColour" format="reference" />
     </declare-styleable>
 </resources>
